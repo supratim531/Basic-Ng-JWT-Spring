@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { User } from 'src/app/model/user/user.model';
 import { UserService } from 'src/app/service/user/user.service';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-user-list',
@@ -11,14 +13,33 @@ import { UserService } from 'src/app/service/user/user.service';
 export class UserListComponent implements OnInit {
 
   users: User[] = [];
+  currentUser!: User;
 
   constructor(
-    private _userService: UserService
+    private _router: Router,
+    private _userService: UserService,
+    private _navbarComponent: NavbarComponent
   ) {
   }
 
   ngOnInit(): void {
+    this.setUserDetails();
     this.refreshUserList();
+  }
+
+  setUserDetails(): void {
+    const username = this._navbarComponent.currentUsername;
+    if (username !== null) {
+      this._userService.getUserByUsername(username).subscribe(
+        response => {
+          console.log('response', response);
+          this.currentUser = response;
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
+    }
   }
 
   refreshUserList(): void {
@@ -29,6 +50,7 @@ export class UserListComponent implements OnInit {
       },
       error => {
         console.log('error', error);
+        this._router.navigateByUrl('/home');
       }
     );
   }
@@ -49,6 +71,7 @@ export class UserListComponent implements OnInit {
 
   updateOnClick(userId: number): void {
     console.log('update button works');
+    alert(`'update button works' (but not implemented yet)`);
   }
 
 }

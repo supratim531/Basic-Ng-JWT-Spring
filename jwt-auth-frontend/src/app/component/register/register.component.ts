@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  private _prepareUserToRegister(): void {
+  private _prepareUserToRegister(): boolean {
     this.role.roleName = 'ROLE_USER';
 
     this.user.role = this.role;
@@ -43,22 +43,30 @@ export class RegisterComponent implements OnInit {
     this.user.password = this.registerForm.value['passw'];
     this.user.lastName = this.registerForm.value['lname'];
     this.user.firstName = this.registerForm.value['fname'];
+
+    if (this.registerForm.value?.passw !== this.registerForm.value?.cpassw)
+      return false;
+    return true;
   }
 
   registerOnClick(): void {
-    this._prepareUserToRegister();
-    this._userService.registerUser(this.user).subscribe(
-      response => {
-        console.log('response', response);
-        this.errorMessage = null;
-        this.successMessage = `${response.username} is registered successfully`;
-      },
-      error => {
-        console.log('error', error);
-        this.errorMessage = error.error;
-        this.successMessage = null;
-      }
-    );
+    if (this._prepareUserToRegister()) {
+      this._userService.registerUser(this.user).subscribe(
+        response => {
+          console.log('response', response);
+          this.errorMessage = null;
+          this.successMessage = `${response.username} is registered successfully`;
+        },
+        error => {
+          console.log('error', error);
+          this.errorMessage = error.error;
+          this.successMessage = null;
+        }
+      );
+    } else {
+      this.errorMessage = 'Confirm Password didn\'t match';
+      this.successMessage = null;
+    }
   }
 
   closeErrorMessage(): void {

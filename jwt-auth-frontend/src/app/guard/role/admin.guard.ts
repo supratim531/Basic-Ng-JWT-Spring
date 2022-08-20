@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 
 import { AuthService } from 'src/app/service/auth/auth.service';
+import { NavbarComponent } from 'src/app/component/navbar/navbar.component';
 
 @Injectable({
   providedIn: 'root'

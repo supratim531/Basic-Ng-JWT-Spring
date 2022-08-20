@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
       response => {
         console.log('response', response);
         this._tokenService.storeToken(response.jwt);
+        window.sessionStorage.setItem('current_user_role', response.user.role.roleName);
         this._router.navigateByUrl('/home');
         location.reload();
       },
@@ -46,6 +47,10 @@ export class LoginComponent implements OnInit {
 
   closeErrorMessage(): void {
     this.errorMessage = null;
+  }
+
+  alertMessage(msg: string): void {
+    alert(`${msg} (but not implemented yet)`);
   }
 
 }

@@ -22,19 +22,25 @@
     </thead>
     <tbody>
       <tr *ngFor="let user of users">
-        <th class="text-center" scope="row"># KFC30B{{user.userId}}</th>
+        <th class="text-center" scope="row"># GRYFFIND{{user.userId}}R</th>
         <td class="text-center">{{user.username}}</td>
         <td class="text-center">{{user.firstName}} {{user.lastName}}</td>
         <td class="text-center">{{user.email}}</td>
-        <td class="text-center">{{user.role.roleName}}</td>
-        <!-- <td *ngIf="user.role.roleName === 'ROLE_ADMIN' else elseBlock" class="text-center"> -->
-        <td *ngIf="0 else elseBlock" class="text-center">
-          <i><b style="opacity: 55%;">NO_ACTION</b></i>
+
+        <td style="font-size: 18px;" *ngIf="user.role.roleName !== 'ROLE_ADMIN'" class="text-center"><big><i class="fa-solid fa-user"></i></big></td>
+        <td style="font-size: 18px;" *ngIf="user.role.roleName === 'ROLE_ADMIN' && user.userId !== 0" class="text-center"><big><i class="fa-solid fa-user-shield"></i></big></td>
+        <td style="font-size: 18px;" *ngIf="user.role.roleName === 'ROLE_ADMIN' && user.userId === 0" class="text-center"><big><i class="fa-solid fa-user-secret"></i></big></td>
+
+        <td *ngIf="this.currentUser.userId === 0 else elseBlock" class="text-center">
+          <i *ngIf="user.userId === 0"><b style="opacity: 55%;">NO_ACTION</b></i>
+          <button *ngIf="user.userId !== 0" class="btn btn-primary mx-2" (click)="updateOnClick(user.userId)"><i class="fa-solid fa-user-pen"></i></button>
+          <button *ngIf="user.userId !== 0" class="btn btn-danger mx-2" (click)="deleteOnClick(user.userId)"><i class="fa-solid fa-user-slash"></i></button>
         </td>
         <ng-template #elseBlock>
           <td class="text-center">
-            <button class="btn btn-primary mx-2" (click)="updateOnClick(user.userId)"><i class="fa-solid fa-user-pen"></i></button>
-            <button class="btn btn-danger mx-2" (click)="deleteOnClick(user.userId)"><i class="fa-solid fa-user-slash"></i></button>
+            <i *ngIf="user.role.roleName === 'ROLE_ADMIN'"><b style="opacity: 55%;">NO_ACTION</b></i>
+            <button *ngIf="user.role.roleName !== 'ROLE_ADMIN'" class="btn btn-primary mx-2" (click)="updateOnClick(user.userId)"><i class="fa-solid fa-user-pen"></i></button>
+            <button *ngIf="user.role.roleName !== 'ROLE_ADMIN'" class="btn btn-danger mx-2" (click)="deleteOnClick(user.userId)"><i class="fa-solid fa-user-slash"></i></button>
           </td>
         </ng-template>
       </tr>

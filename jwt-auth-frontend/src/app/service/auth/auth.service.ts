@@ -9,11 +9,11 @@ import { TokenService } from '../token/token.service';
 })
 export class AuthService {
 
-  private _tokenService: TokenService = new TokenService();
   private _loginAPI = 'http://localhost:8888/api/auth/login';
 
   constructor(
-    private _httpClient: HttpClient
+    private _httpClient: HttpClient,
+    private _tokenService: TokenService
   ) {
   }
 
@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   isSuperuser(): boolean {
-    return true;
+    return (window.sessionStorage.getItem('current_user_role') === 'ROLE_ADMIN') ? true : false;
   }
 
   login(credential: any): Observable<any> {
