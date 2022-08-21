@@ -24,8 +24,14 @@
       <tr *ngFor="let user of users">
         <th class="text-center" scope="row"># GRYFFIND{{user.userId}}R</th>
         <td class="text-center">{{user.username}}</td>
-        <td class="text-center">{{user.firstName}} {{user.lastName}}</td>
-        <td class="text-center">{{user.email}}</td>
+        <td class="text-center" *ngIf="user.firstName !== '' || user.lastName !== '' else elseFullName">{{user.firstName}} {{user.lastName}}</td>
+        <ng-template #elseFullName>
+          <td class="text-center">N/A</td>
+        </ng-template>
+        <td class="text-center" *ngIf="user.email !== '' else elseEmail">{{user.email}}</td>
+        <ng-template #elseEmail>
+          <td class="text-center">N/A</td>
+        </ng-template>
 
         <td style="font-size: 18px;" *ngIf="user.role.roleName !== 'ROLE_ADMIN'" class="text-center"><big><i class="fa-solid fa-user"></i></big></td>
         <td style="font-size: 18px;" *ngIf="user.role.roleName === 'ROLE_ADMIN' && user.userId !== 0" class="text-center"><big><i class="fa-solid fa-user-shield"></i></big></td>

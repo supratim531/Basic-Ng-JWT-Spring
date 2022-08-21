@@ -4,12 +4,14 @@ import { HttpClient } from '@angular/common/http';
 
 import { TokenService } from '../token/token.service';
 
+const DOMAIN = 'https://ngjwtboot.herokuapp.com';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private _loginAPI = 'http://localhost:8888/api/auth/login';
+  private _loginAPI = `${DOMAIN}/api/auth/login`;
 
   constructor(
     private _httpClient: HttpClient,

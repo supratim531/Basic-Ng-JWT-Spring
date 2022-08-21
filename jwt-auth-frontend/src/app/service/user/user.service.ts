@@ -4,12 +4,14 @@ import { HttpClient } from '@angular/common/http';
 
 import { User } from '../../model/user/user.model';
 
+const DOMAIN = 'https://ngjwtboot.herokuapp.com';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private _baseURL = 'http://localhost:8888/api/user';
+  private _baseURL = `${DOMAIN}/api/user`;
 
   private _getAllUsersAPI = `${this._baseURL}/getAllUsers`;
   private _registerUserAPI = `${this._baseURL}/registerUser`;

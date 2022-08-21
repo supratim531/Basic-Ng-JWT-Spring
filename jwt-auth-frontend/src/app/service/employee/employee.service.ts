@@ -4,12 +4,14 @@ import { HttpClient } from '@angular/common/http';
 
 import { Employee } from 'src/app/model/employee/employee.model';
 
+const DOMAIN = 'https://ngjwtboot.herokuapp.com';
+
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
 
-  private _baseURL = 'http://localhost:8888/api/employee';
+  private _baseURL = `${DOMAIN}/api/employee`;
 
   private _getAllEmployeesAPI = `${this._baseURL}/getAllEmployees`;
 

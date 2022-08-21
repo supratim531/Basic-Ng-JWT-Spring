@@ -12,7 +12,10 @@
           User ID: GryFFinD{{this.currentUser.userId}}R<br>
           Username: {{this.currentUser.username}}<br>
           Email: {{this.currentUser.email}}<br>
-          Full Name: {{this.currentUser.firstName}} {{this.currentUser.lastName}}<br>
+          <span *ngIf="this.currentUser.firstName !== '' || this.currentUser.lastName !== '' else elseFullName">Full Name: {{this.currentUser.firstName}} {{this.currentUser.lastName}}<br></span>
+          <ng-template #elseFullName>
+            Full Name: N/A<br>
+          </ng-template>
         </div>
       </div>
       <div class="modal-footer">
